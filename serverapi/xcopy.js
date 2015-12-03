@@ -47,9 +47,15 @@ var exists = function( src, dst, callback ){
         }
         // 不存在
         else{
-            fs.mkdir( dst, function(){
-                callback( src, dst );
-            });
+            var mulu=dst.split("/");
+            var sss="";
+            for (var i = 0;i<mulu.length;i++) {
+                sss+=mulu[i]+"/";
+                if(sss=="./"||sss=="../"||fs.existsSync(sss)) continue;
+                fs.mkdirSync(sss);
+                console.log(mulu[i]);
+            }
+            callback( src, dst );
         }
     });
 };

@@ -83,7 +83,7 @@ _gulp2.default.task('clean', _del2.default.bind(null, ['.tmp', 'dist']));
 _gulp2.default.task('serve', ['styles', 'fonts'], function () {
   (0, _browserSync2.default)({
     notify: false,
-    port: 9000,
+    port: 8080,
     server: {
       baseDir: ['.tmp', 'app'],
       routes: {
@@ -102,7 +102,7 @@ _gulp2.default.task('serve', ['styles', 'fonts'], function () {
 _gulp2.default.task('serve:dist', function () {
   (0, _browserSync2.default)({
     notify: false,
-    port: 9000,
+    port: 8080,
     server: {
       baseDir: ['dist']
     }
@@ -112,7 +112,7 @@ _gulp2.default.task('serve:dist', function () {
 _gulp2.default.task('serve:test', function () {
   (0, _browserSync2.default)({
     notify: false,
-    port: 9000,
+    port: 8080,
     ui: false,
     server: {
       baseDir: 'test',
