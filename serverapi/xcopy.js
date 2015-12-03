@@ -1,13 +1,14 @@
-var fs = require( 'fs' ),
-    stat = fs.stat;
+var fs = require( 'fs' );
+
+var stat = fs.stat;
 
 /*
- * ¸´ÖÆÄ¿Â¼ÖĞµÄËùÓĞÎÄ¼ş°üÀ¨×ÓÄ¿Â¼
- * @param{ String } ĞèÒª¸´ÖÆµÄÄ¿Â¼
- * @param{ String } ¸´ÖÆµ½Ö¸¶¨µÄÄ¿Â¼
+ * å¤åˆ¶ç›®å½•ä¸­çš„æ‰€æœ‰æ–‡ä»¶åŒ…æ‹¬å­ç›®å½•
+ * @param{ String } éœ€è¦å¤åˆ¶çš„ç›®å½•
+ * @param{ String } å¤åˆ¶åˆ°æŒ‡å®šçš„ç›®å½•
  */
 var copy = function( src, dst ){
-    // ¶ÁÈ¡Ä¿Â¼ÖĞµÄËùÓĞÎÄ¼ş/Ä¿Â¼
+    // è¯»å–ç›®å½•ä¸­çš„æ‰€æœ‰æ–‡ä»¶/ç›®å½•
     fs.readdir( src, function( err, paths ){
         if( err ){
             throw err;
@@ -15,21 +16,21 @@ var copy = function( src, dst ){
         paths.forEach(function( path ){
             var _src = src + '/' + path,
                 _dst = dst + '/' + path,
-                readable, writable;       
+                readable, writable;
             stat( _src, function( err, st ){
                 if( err ){
                     throw err;
                 }
-                // ÅĞ¶ÏÊÇ·ñÎªÎÄ¼ş
+                // åˆ¤æ–­æ˜¯å¦ä¸ºæ–‡ä»¶
                 if( st.isFile() ){
-                    // ´´½¨¶ÁÈ¡Á÷
+                    // åˆ›å»ºè¯»å–æµ
                     readable = fs.createReadStream( _src );
-                    // ´´½¨Ğ´ÈëÁ÷
-                    writable = fs.createWriteStream( _dst );   
-                    // Í¨¹ı¹ÜµÀÀ´´«ÊäÁ÷
+                    // åˆ›å»ºå†™å…¥æµ
+                    writable = fs.createWriteStream( _dst );
+                    // é€šè¿‡ç®¡é“æ¥ä¼ è¾“æµ
                     readable.pipe( writable );
                 }
-                // Èç¹ûÊÇÄ¿Â¼Ôòµİ¹éµ÷ÓÃ×ÔÉí
+                // å¦‚æœæ˜¯ç›®å½•åˆ™é€’å½’è°ƒç”¨è‡ªèº«
                 else if( st.isDirectory() ){
                     exists( _src, _dst, copy );
                 }
@@ -37,14 +38,14 @@ var copy = function( src, dst ){
         });
     });
 };
-// ÔÚ¸´ÖÆÄ¿Â¼Ç°ĞèÒªÅĞ¶Ï¸ÃÄ¿Â¼ÊÇ·ñ´æÔÚ£¬²»´æÔÚĞèÒªÏÈ´´½¨Ä¿Â¼
+// åœ¨å¤åˆ¶ç›®å½•å‰éœ€è¦åˆ¤æ–­è¯¥ç›®å½•æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨éœ€è¦å…ˆåˆ›å»ºç›®å½•
 var exists = function( src, dst, callback ){
     fs.exists( dst, function( exists ){
-        // ÒÑ´æÔÚ
+        // å·²å­˜åœ¨
         if( exists ){
             callback( src, dst );
         }
-        // ²»´æÔÚ
+        // ä¸å­˜åœ¨
         else{
             fs.mkdir( dst, function(){
                 callback( src, dst );

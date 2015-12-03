@@ -1,12 +1,15 @@
 var fs = require("fs");
 var execSync = require("child_process").exec;
 
-
+var ccmdstr = "g++ temp.c -o temp.exe&&chmod 0777 temp.exe&&./temp.exe";
+if(process.platform.indexOf("win")==0) {
+  ccmdstr="g++ temp.c -o temp.exe&&temp.exe";
+}
 function runC(code,fn){
 
   function run(){
     fs.writeFileSync("temp.c",code);
-    execSync("g++ temp.c -o temp.exe&&temp.exe",function (error, stdout, stderr) {
+    execSync(ccmdstr,function (error, stdout, stderr) {
       if (error) {
         fn(error,stderr);
       }else{
