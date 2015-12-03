@@ -72,7 +72,7 @@ _gulp2.default.task('fonts', function () {
 });
 
 _gulp2.default.task('extras', function () {
-  require("child_process").exec("echo d|xcopy app\\chapters dist\\chapters /s /d /e /h");
+  require("./serverapi/xcopy.js")("./app/chapters","./dist/chapters");
   return _gulp2.default.src(['app/*.*', '!app/*.html'], {
     dot: true
   }).pipe(_gulp2.default.dest('dist'));
@@ -145,5 +145,3 @@ _gulp2.default.task('build', [/*'lint',*/'html', 'images', 'fonts', 'extras'], f
 _gulp2.default.task('default', ['clean'], function () {
   _gulp2.default.start('build');
 });
-
-//# sourceMappingURL=gulpfile.babel-compiled.js.map

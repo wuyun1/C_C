@@ -79,7 +79,7 @@ gulp.task('fonts', () => {
 });
 
 gulp.task('extras', () => {
-	require("child_process").exec("echo d|xcopy app\\chapters dist\\chapters /s /d /e /h");
+	require("./serverapi/xcopy.js")("./app/chapters","./dist/chapters");
   return gulp.src([
     'app/*.*',
     '!app/*.html'
